@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HOD Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css" />
+  </head>
+  <body>
+    <div class="dashboard-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <h2>HOD Panel</h2>
+          <p>Attendance System</p>
+        </div>
+        <nav>
+          <a class="active" href="#">Dashboard</a>
+          <a href="#">Departments</a>
+          <a href="#">Faculty</a>
+          <a href="#">Attendance Reports</a>
+          <a href="#">Overall Attendance</a>
+          <a href="#">Defaulter Reports</a>
+          <a href="#">Notifications</a>
+          <a href="#">Settings</a>
+          <a href="../index.html">Logout</a>
+        </nav>
+      </aside>
+
+      <main class="main-panel">
+        <header class="topbar">
+          <button class="menu-toggle">☰</button>
+          <div class="topbar-search">
+            <input type="text" placeholder="Search" />
+          </div>
+          <div class="topbar-actions">
+            <button class="icon-btn">🔔</button>
+            <div class="profile-chip">HD</div>
+          </div>
+        </header>
+
+        <section class="dashboard-grid">
+          <article class="dash-card">
+            <h3>Total Students</h3>
+            <p class="metric">1200</p>
+          </article>
+          <article class="dash-card">
+            <h3>Faculty Members</h3>
+            <p class="metric">65</p>
+          </article>
+          <article class="dash-card">
+            <h3>Departments</h3>
+            <p class="metric">25</p>
+          </article>
+          <article class="dash-card">
+            <h3>Attendance %</h3>
+            <p class="metric">96%</p>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <article class="panel-card">
+            <h3>Reports</h3>
+            <ul class="list-stack">
+              <li>Overall semester attendance report ready.</li>
+              <li>Department-wise defaulter summary updated.</li>
+              <li>Faculty performance overview generated.</li>
+            </ul>
+          </article>
+          <article class="panel-card">
+            <h3>Recent Activities</h3>
+            <ul class="list-stack">
+              <li>Reviewed attendance compliance across 5 departments.</li>
+              <li>Approved notice for next academic review.</li>
+              <li>Shared insights with campus administration.</li>
+            </ul>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="../js/dashboard.js"></script>
+  </body>
+</html>

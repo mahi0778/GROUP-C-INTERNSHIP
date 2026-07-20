@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GFM Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css" />
+  </head>
+  <body>
+    <div class="dashboard-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <h2>GFM Panel</h2>
+          <p>Attendance System</p>
+        </div>
+        <nav>
+          <a class="active" href="#">Dashboard</a>
+          <a href="#">Student List</a>
+          <a href="#">Attendance Entry</a>
+          <a href="#">Attendance Defaulters</a>
+          <a href="#">Reports</a>
+          <a href="#">Notifications</a>
+          <a href="#">Profile</a>
+          <a href="../index.html">Logout</a>
+        </nav>
+      </aside>
+
+      <main class="main-panel">
+        <header class="topbar">
+          <button class="menu-toggle">☰</button>
+          <div class="topbar-search">
+            <input type="text" placeholder="Search" />
+          </div>
+          <div class="topbar-actions">
+            <button class="icon-btn">🔔</button>
+            <div class="profile-chip">GF</div>
+          </div>
+        </header>
+
+        <section class="dashboard-grid">
+          <article class="dash-card">
+            <h3>Assigned Classes</h3>
+            <p class="metric">6</p>
+          </article>
+          <article class="dash-card">
+            <h3>Today's Attendance</h3>
+            <p class="metric">88%</p>
+          </article>
+          <article class="dash-card">
+            <h3>Students</h3>
+            <p class="metric">180</p>
+          </article>
+          <article class="dash-card">
+            <h3>Defaulters</h3>
+            <p class="metric">12</p>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <article class="panel-card">
+            <h3>Pending Notices</h3>
+            <ul class="list-stack">
+              <li>Attendance summary for dept A pending.</li>
+              <li>Student follow-up needed for two classes.</li>
+              <li>Faculty meeting reminder scheduled.</li>
+            </ul>
+          </article>
+          <article class="panel-card">
+            <h3>Recent Activities</h3>
+            <ul class="list-stack">
+              <li>Updated attendance for 3rd semester.</li>
+              <li>Flagged 6 low-attendance students.</li>
+              <li>Shared reports with department office.</li>
+            </ul>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="../js/dashboard.js"></script>
+  </body>
+</html>

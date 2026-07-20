@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css" />
+  </head>
+  <body>
+    <div class="dashboard-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <h2>Student Portal</h2>
+          <p>Attendance System</p>
+        </div>
+        <nav>
+          <a class="active" href="#">Dashboard</a>
+          <a href="#">Attendance Summary</a>
+          <a href="#">Attendance History</a>
+          <a href="#">Notifications</a>
+          <a href="#">Profile</a>
+          <a href="../index.html">Logout</a>
+        </nav>
+      </aside>
+
+      <main class="main-panel">
+        <header class="topbar">
+          <button class="menu-toggle">☰</button>
+          <div class="topbar-search">
+            <input type="text" placeholder="Search" />
+          </div>
+          <div class="topbar-actions">
+            <button class="icon-btn">🔔</button>
+            <div class="profile-chip">JS</div>
+          </div>
+        </header>
+
+        <section class="dashboard-grid">
+          <article class="dash-card">
+            <h3>Attendance Percentage</h3>
+            <p class="metric">92%</p>
+          </article>
+          <article class="dash-card">
+            <h3>Classes Attended</h3>
+            <p class="metric">84</p>
+          </article>
+          <article class="dash-card">
+            <h3>Classes Missed</h3>
+            <p class="metric">7</p>
+          </article>
+          <article class="dash-card">
+            <h3>Warning Status</h3>
+            <p class="metric status">Safe</p>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <article class="panel-card">
+            <h3>Attendance Graph</h3>
+            <div class="graph-placeholder">Graph Placeholder</div>
+          </article>
+          <article class="panel-card">
+            <h3>Recent Notices</h3>
+            <ul class="list-stack">
+              <li>Attendance review scheduled for Friday.</li>
+              <li>Department seminar postponed.</li>
+              <li>Weekly report shared to all students.</li>
+            </ul>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="../js/dashboard.js"></script>
+  </body>
+</html>
