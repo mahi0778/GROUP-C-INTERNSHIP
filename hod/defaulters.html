@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Defaulter List | HOD Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <body data-page="defaulters">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="sidebar-profile">
+          <div class="profile-avatar">
+            <img src="images/hod-profile.png" alt="Dr. Dipali Shende" />
+          </div>
+          <div class="profile-meta">
+            <span class="profile-badge">HOD</span>
+            <h2>Dr. Dipali Shende</h2>
+            <p>Head of Department</p>
+            <div class="status-pill"><span class="status-dot"></span> Online</div>
+          </div>
+        </div>
+
+        <nav class="sidebar-menu">
+          <a href="dashboard.html"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
+          <a href="attendance.html"><i class="fa-solid fa-clipboard-user"></i><span>Students Attendance</span></a>
+          <a href="faculty.html"><i class="fa-solid fa-chalkboard-user"></i><span>Faculty Management</span></a>
+          <a class="active" href="defaulters.html"><i class="fa-solid fa-triangle-exclamation"></i><span>Defaulter List</span></a>
+          <a href="reports.html"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a>
+          <a href="notice.html"><i class="fa-solid fa-bell"></i><span>Notice Board</span></a>
+          <a href="settings.html"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+          <a href="profile.html"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+          <a href="../index.html"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+        </nav>
+      </aside>
+
+      <div class="main-panel">
+        <header class="topbar">
+          <button class="menu-toggle" aria-label="Toggle sidebar"><i class="fa-solid fa-bars"></i></button>
+          <div class="topbar-title">Student Attendance Management System</div>
+          <div class="topbar-actions">
+            <button class="icon-btn" aria-label="Notifications"><i class="fa-solid fa-bell"></i></button>
+            <label class="search-box">
+              <i class="fa-solid fa-search"></i>
+              <input type="text" placeholder="Search student" />
+            </label>
+            <div class="avatar-chip">
+              <img src="images/hod-profile.png" alt="Profile" />
+            </div>
+          </div>
+        </header>
+
+        <main class="content-area">
+          <section class="page-header reveal">
+            <div>
+              <p class="eyebrow">Low attendance review</p>
+              <h1>Defaulter List</h1>
+              <p class="lead">Track students below attendance criteria and monitor guardian communication.</p>
+            </div>
+          </section>
+
+          <section class="filter-bar reveal">
+            <label>
+              <span>Division</span>
+              <select>
+                <option>All</option>
+                <option>FY A</option>
+                <option>FY B</option>
+                <option>SY A</option>
+              </select>
+            </label>
+            <label>
+              <span>Subject</span>
+              <select>
+                <option>All</option>
+                <option>DBMS</option>
+                <option>OOP</option>
+              </select>
+            </label>
+            <label>
+              <span>Faculty</span>
+              <select>
+                <option>All</option>
+                <option>Prof. D. Shah</option>
+                <option>Prof. N. Joshi</option>
+              </select>
+            </label>
+          </section>
+
+          <section class="table-card reveal">
+            <div class="panel-head">
+              <h3>Students Below Required Attendance</h3>
+              <button class="btn btn-secondary"><i class="fa-solid fa-paper-plane"></i> Notify Guardians</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Roll No</th>
+                    <th>PRN</th>
+                    <th>Student Name</th>
+                    <th>Division</th>
+                    <th>Attendance %</th>
+                    <th>Reason</th>
+                    <th>Guardian Status</th>
+                    <th>Notice Sent</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="danger-row">
+                    <td>2101</td>
+                    <td>PRN-112</td>
+                    <td>Rahul Kulkarni</td>
+                    <td>FY A</td>
+                    <td>54%</td>
+                    <td>Multiple absences</td>
+                    <td>Pending</td>
+                    <td>No</td>
+                    <td><button class="btn btn-secondary">View</button></td>
+                  </tr>
+                  <tr class="danger-row">
+                    <td>2104</td>
+                    <td>PRN-118</td>
+                    <td>Sneha Patil</td>
+                    <td>FY C</td>
+                    <td>58%</td>
+                    <td>Medical leave not submitted</td>
+                    <td>Contacted</td>
+                    <td>Yes</td>
+                    <td><button class="btn btn-secondary">View</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+
+        <footer class="app-footer">
+          <div>
+            <h3>Student Attendance Management System</h3>
+            <p>Version 1.0 • © 2026</p>
+          </div>
+          <div>
+            <h3>Quick Links</h3>
+            <a href="attendance.html">Attendance</a>
+            <a href="reports.html">Reports</a>
+            <a href="notice.html">Notice</a>
+          </div>
+          <div>
+            <h3>Support</h3>
+            <a href="mailto:support@collegeportal.edu">support@collegeportal.edu</a>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

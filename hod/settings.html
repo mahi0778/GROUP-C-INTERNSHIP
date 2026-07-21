@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings | HOD Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <body data-page="settings">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="sidebar-profile">
+          <div class="profile-avatar">
+            <img src="images/hod-profile.png" alt="Dr. Dipali Shende" />
+          </div>
+          <div class="profile-meta">
+            <span class="profile-badge">HOD</span>
+            <h2>Dr. Dipali Shende</h2>
+            <p>Head of Department</p>
+            <div class="status-pill"><span class="status-dot"></span> Online</div>
+          </div>
+        </div>
+
+        <nav class="sidebar-menu">
+          <a href="dashboard.html"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
+          <a href="attendance.html"><i class="fa-solid fa-clipboard-user"></i><span>Students Attendance</span></a>
+          <a href="faculty.html"><i class="fa-solid fa-chalkboard-user"></i><span>Faculty Management</span></a>
+          <a href="defaulters.html"><i class="fa-solid fa-triangle-exclamation"></i><span>Defaulter List</span></a>
+          <a href="reports.html"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a>
+          <a href="notice.html"><i class="fa-solid fa-bell"></i><span>Notice Board</span></a>
+          <a class="active" href="settings.html"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+          <a href="profile.html"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+          <a href="../index.html"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+        </nav>
+      </aside>
+
+      <div class="main-panel">
+        <header class="topbar">
+          <button class="menu-toggle" aria-label="Toggle sidebar"><i class="fa-solid fa-bars"></i></button>
+          <div class="topbar-title">Student Attendance Management System</div>
+          <div class="topbar-actions">
+            <button class="icon-btn" aria-label="Notifications"><i class="fa-solid fa-bell"></i></button>
+            <label class="search-box">
+              <i class="fa-solid fa-search"></i>
+              <input type="text" placeholder="Search settings" />
+            </label>
+            <div class="avatar-chip">
+              <img src="images/hod-profile.png" alt="Profile" />
+            </div>
+          </div>
+        </header>
+
+        <main class="content-area">
+          <section class="page-header reveal">
+            <div>
+              <p class="eyebrow">Portal preferences</p>
+              <h1>Settings</h1>
+              <p class="lead">Manage theme, notifications, privacy, and account preferences.</p>
+            </div>
+          </section>
+
+          <section class="settings-grid">
+            <article class="panel-card reveal">
+              <h3>Theme</h3>
+              <p>Use the default blue and cyan university theme for the dashboard experience.</p>
+            </article>
+            <article class="panel-card reveal">
+              <h3>Notifications</h3>
+              <p>Enable defaulter alerts, report updates, and new notice reminders.</p>
+            </article>
+            <article class="panel-card reveal">
+              <h3>Language</h3>
+              <p>English is currently enabled for the portal interface.</p>
+            </article>
+            <article class="panel-card reveal">
+              <h3>Privacy</h3>
+              <p>Only authorized department staff can access the full dashboard.</p>
+            </article>
+            <article class="panel-card reveal">
+              <h3>Account Settings</h3>
+              <p>Prepare the panel for future database-based profile and password updates.</p>
+            </article>
+            <article class="panel-card reveal">
+              <h3>System Information</h3>
+              <p>Frontend-only placeholders ready for MySQL and PHP integration.</p>
+            </article>
+          </section>
+        </main>
+
+        <footer class="app-footer">
+          <div>
+            <h3>Student Attendance Management System</h3>
+            <p>Version 1.0 • © 2026</p>
+          </div>
+          <div>
+            <h3>Quick Links</h3>
+            <a href="attendance.html">Attendance</a>
+            <a href="reports.html">Reports</a>
+            <a href="notice.html">Notice</a>
+          </div>
+          <div>
+            <h3>Support</h3>
+            <a href="mailto:support@collegeportal.edu">support@collegeportal.edu</a>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

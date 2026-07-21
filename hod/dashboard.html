@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HOD Dashboard | Student Attendance System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <body data-page="dashboard">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="sidebar-profile">
+          <div class="profile-avatar">
+            <img src="images/hod-profile.png" alt="Dr. Dipali Shende" />
+          </div>
+          <div class="profile-meta">
+            <span class="profile-badge">HOD</span>
+            <h2>Dr. Dipali Shende</h2>
+            <p>Head of Department</p>
+            <div class="status-pill"><span class="status-dot"></span> Online</div>
+          </div>
+        </div>
+
+        <nav class="sidebar-menu">
+          <a class="active" href="dashboard.html"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
+          <a href="attendance.html"><i class="fa-solid fa-clipboard-user"></i><span>Students Attendance</span></a>
+          <a href="faculty.html"><i class="fa-solid fa-chalkboard-user"></i><span>Faculty Management</span></a>
+          <a href="defaulters.html"><i class="fa-solid fa-triangle-exclamation"></i><span>Defaulter List</span></a>
+          <a href="reports.html"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a>
+          <a href="notice.html"><i class="fa-solid fa-bell"></i><span>Notice Board</span></a>
+          <a href="settings.html"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+          <a href="profile.html"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+          <a href="../index.html"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+        </nav>
+      </aside>
+
+      <div class="main-panel">
+        <header class="topbar">
+          <button class="menu-toggle" aria-label="Toggle sidebar"><i class="fa-solid fa-bars"></i></button>
+          <div class="topbar-title">Student Attendance Management System</div>
+          <div class="topbar-actions">
+            <button class="icon-btn" aria-label="Notifications"><i class="fa-solid fa-bell"></i></button>
+            <label class="search-box">
+              <i class="fa-solid fa-search"></i>
+              <input type="text" placeholder="Search" />
+            </label>
+            <div class="avatar-chip">
+              <img src="images/hod-profile.png" alt="Profile" />
+            </div>
+          </div>
+        </header>
+
+        <main class="content-area">
+          <section class="page-loading" aria-hidden="true">
+            <div class="skeleton hero-skeleton"></div>
+            <div class="skeleton card-skeleton"></div>
+            <div class="skeleton card-skeleton"></div>
+          </section>
+
+          <section class="welcome-card reveal">
+            <div>
+              <p class="eyebrow">Welcome back</p>
+              <h1>Welcome, Dr. Dipali Shende</h1>
+              <p class="lead">Monitor department attendance, faculty performance, and student progress from a single, modern portal.</p>
+            </div>
+            <div class="badge-stack">
+              <span class="mini-badge"><i class="fa-solid fa-shield-halved"></i> Secure</span>
+              <span class="mini-badge"><i class="fa-solid fa-bolt"></i> Real-time</span>
+            </div>
+          </section>
+
+          <section class="summary-grid">
+            <article class="summary-card reveal">
+              <div class="summary-icon blue"><i class="fa-solid fa-users"></i></div>
+              <div>
+                <h3>Total Students</h3>
+                <p class="metric">1,248</p>
+              </div>
+            </article>
+            <article class="summary-card reveal">
+              <div class="summary-icon cyan"><i class="fa-solid fa-chalkboard-teacher"></i></div>
+              <div>
+                <h3>Total Faculty</h3>
+                <p class="metric">62</p>
+              </div>
+            </article>
+            <article class="summary-card reveal">
+              <div class="summary-icon purple"><i class="fa-solid fa-calendar-days"></i></div>
+              <div>
+                <h3>Total Classes</h3>
+                <p class="metric">186</p>
+              </div>
+            </article>
+            <article class="summary-card reveal">
+              <div class="summary-icon green"><i class="fa-solid fa-chart-pie"></i></div>
+              <div>
+                <h3>Attendance %</h3>
+                <p class="metric">92.4%</p>
+              </div>
+            </article>
+            <article class="summary-card reveal">
+              <div class="summary-icon orange"><i class="fa-solid fa-user-slash"></i></div>
+              <div>
+                <h3>Defaulters</h3>
+                <p class="metric">19</p>
+              </div>
+            </article>
+            <article class="summary-card reveal">
+              <div class="summary-icon pink"><i class="fa-solid fa-file-lines"></i></div>
+              <div>
+                <h3>Pending Reports</h3>
+                <p class="metric">8</p>
+              </div>
+            </article>
+          </section>
+
+          <section class="content-grid">
+            <article class="panel-card reveal">
+              <div class="panel-head">
+                <h3>Department Highlights</h3>
+                <a href="reports.html">View report</a>
+              </div>
+              <ul class="list-stack">
+                <li><i class="fa-solid fa-circle-check"></i> Semester attendance trend improved by 4.8% this month.</li>
+                <li><i class="fa-solid fa-circle-check"></i> First-year division FY-C requires immediate attention.</li>
+                <li><i class="fa-solid fa-circle-check"></i> Faculty review meeting scheduled for Friday at 11:00 AM.</li>
+              </ul>
+            </article>
+
+            <article class="panel-card reveal">
+              <div class="panel-head">
+                <h3>Recent Activities</h3>
+                <a href="notice.html">See notices</a>
+              </div>
+              <ul class="list-stack">
+                <li><i class="fa-solid fa-bolt"></i> Reviewed 14 defaulter cases and issued notices.</li>
+                <li><i class="fa-solid fa-bolt"></i> Updated faculty subject allocation for Computer Engineering.</li>
+                <li><i class="fa-solid fa-bolt"></i> Shared monthly attendance summary with the dean.</li>
+              </ul>
+            </article>
+          </section>
+        </main>
+
+        <footer class="app-footer">
+          <div>
+            <h3>Student Attendance Management System</h3>
+            <p>Version 1.0 • © 2026</p>
+          </div>
+          <div>
+            <h3>Quick Links</h3>
+            <a href="attendance.html">Attendance</a>
+            <a href="reports.html">Reports</a>
+            <a href="notice.html">Notice</a>
+          </div>
+          <div>
+            <h3>Support</h3>
+            <a href="mailto:support@collegeportal.edu">support@collegeportal.edu</a>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>
