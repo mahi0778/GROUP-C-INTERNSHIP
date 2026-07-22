@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="nav-links">
           <a href="home.html" class="${currentPage === 'home.html' ? 'active' : ''}">Home</a>
           <a href="defaulter.html" class="${currentPage === 'defaulter.html' ? 'active' : ''}">Defaulter Criteria</a>
-          <a href="schedule.html" class="${currentPage === 'schedule.html' ? 'active' : ''}">Schedule</a>
           <a href="notice.html" class="${currentPage === 'notice.html' ? 'active' : ''}">Notice</a>
           <a href="about.html" class="${currentPage === 'about.html' ? 'active' : ''}">About</a>
           <a href="help.html" class="${currentPage === 'help.html' ? 'active' : ''}">Help</a>
@@ -29,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       <div class="footer-grid">
         <div>
           <h3>College Name</h3>
-          <p>Global College of Technology</p>
+          <p>Zeal College Of Engineering And Research</p>
           <p>Department of Academic Administration</p>
           <div class="socials">
             <a href="#">f</a>
