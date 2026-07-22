@@ -105,37 +105,40 @@ try {
 
     echo "Tables created.\n";
 
-    // Generate hashed passwords
-    $studentPass = password_hash('student123', PASSWORD_BCRYPT);
-    $gfmPass     = password_hash('gfm123',     PASSWORD_BCRYPT);
-    $hodPass     = password_hash('hod123',     PASSWORD_BCRYPT);
+    // Helper to generate password hash as <firstname>123
+    function makeUserPassword($fullName, $email) {
+        $cleanName = preg_replace('/^(Dr\.|Prof\.|Mr\.|Mrs\.|Ms\.)\s*/i', '', trim($fullName));
+        $firstName = strtolower(trim(explode(' ', $cleanName)[0]));
+        if (empty($firstName)) {
+            $firstName = strtolower(trim(explode('@', $email)[0]));
+        }
+        return password_hash($firstName . '123', PASSWORD_BCRYPT);
+    }
 
-    echo "Passwords hashed.\n";
-    echo "  HOD password hash: $hodPass\n";
-    echo "  GFM password hash: $gfmPass\n";
-    echo "  Student password hash: $studentPass\n";
+    echo "Passwords hashed as <firstname>123.\n";
 
     // Seed Users
     $usersStmt = $pdo->prepare("INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `role`, `department`, `roll_or_emp_id`) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-    $users = [
-        [1,  'Dr. Dipali Shende',    'hod@college.edu',        $hodPass,     'hod',     'Computer Engineering', 'HOD-001'],
-        [3,  'Omkar Wadekar',        'omkar@college.edu',      $gfmPass,     'gfm',     'Computer Engineering', 'GFM-A101'],
-        [4,  'Pushkaraj Sonalkar',   'pushkaraj@college.edu',  $gfmPass,     'gfm',     'Computer Engineering', 'GFM-B102'],
-        [5,  'Shrutika Saudagar',    'shrutika@college.edu',   $gfmPass,     'gfm',     'Computer Engineering', 'GFM-C103'],
-        [6,  'Om potarkar',          'om@gmail.com',           $studentPass, 'student', 'Computer Engineering', '1'],
-        [7,  'Akib Momin',           'akib@gmail.com',         $studentPass, 'student', 'Computer Engineering', '2'],
-        [8,  'Sachin tompe',         'sachin@gmail.com',       $studentPass, 'student', 'Computer Engineering', '3'],
-        [9,  'Ram Mutthe',           'ram@gmail.com',          $studentPass, 'student', 'Computer Engineering', '1'],
-        [10, 'Yash lahase',          'yash@gmail.com',         $studentPass, 'student', 'Computer Engineering', '2'],
-        [11, 'Sumit Kulkarni',       'sumit@gmail.com',        $studentPass, 'student', 'Computer Engineering', '3'],
-        [12, 'Mahesh Jadhav',        'mahesh@gmail.com',       $studentPass, 'student', 'Computer Engineering', '1'],
-        [13, 'Pushkar Mali',         'pushkar@gmail.com',      $studentPass, 'student', 'Computer Engineering', '2'],
-        [14, 'rushi mane',           'rushi@gmail.com',        $studentPass, 'student', 'Computer Engineering', '3'],
+    $usersData = [
+        [1,  'Dr. Dipali Shende',    'hod@college.edu',        'hod',     'Computer Engineering', 'HOD-001'],
+        [3,  'Omkar Wadekar',        'omkar@college.edu',      'gfm',     'Computer Engineering', 'GFM-A101'],
+        [4,  'Pushkaraj Sonalkar',   'pushkaraj@college.edu',  'gfm',     'Computer Engineering', 'GFM-B102'],
+        [5,  'Shrutika Saudagar',    'shrutika@college.edu',   'gfm',     'Computer Engineering', 'GFM-C103'],
+        [6,  'Om potarkar',          'om@gmail.com',           'student', 'Computer Engineering', '1'],
+        [7,  'Akib Momin',           'akib@gmail.com',         'student', 'Computer Engineering', '2'],
+        [8,  'Sachin tompe',         'sachin@gmail.com',       'student', 'Computer Engineering', '3'],
+        [9,  'Ram Mutthe',           'ram@gmail.com',          'student', 'Computer Engineering', '1'],
+        [10, 'Yash lahase',          'yash@gmail.com',         'student', 'Computer Engineering', '2'],
+        [11, 'Sumit Kulkarni',       'sumit@gmail.com',        'student', 'Computer Engineering', '3'],
+        [12, 'Mahesh Jadhav',        'mahesh@gmail.com',       'student', 'Computer Engineering', '1'],
+        [13, 'Pushkar Mali',         'pushkar@gmail.com',      'student', 'Computer Engineering', '2'],
+        [14, 'rushi mane',           'rushi@gmail.com',        'student', 'Computer Engineering', '3'],
     ];
 
-    foreach ($users as $user) {
-        $usersStmt->execute($user);
+    foreach ($usersData as $u) {
+        $hashedPass = makeUserPassword($u[1], $u[2]);
+        $usersStmt->execute([$u[0], $u[1], $u[2], $hashedPass, $u[3], $u[4], $u[5]]);
     }
     echo "Users seeded.\n";
 

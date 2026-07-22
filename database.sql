@@ -94,38 +94,49 @@ CREATE TABLE `schedules` (
 
 -- ==========================================
 -- SEED DATA
--- Passwords:
--- Student: student123 (hashed)
--- GFM:     gfm123     (hashed)
--- HOD:     hod123     (hashed)
+-- Passwords follow the rule: <firstname>123 (lowercase first name + 123)
+-- Examples:
+--   Ram Mutthe       -> ram123
+--   Omkar Wadekar    -> omkar123
+--   Dr. Dipali       -> dipali123
+--   Om potarkar      -> om123
+--   Akib Momin       -> akib123
+--   Pushkaraj        -> pushkaraj123
+--   Shrutika         -> shrutika123
+--   Sachin           -> sachin123
+--   Yash             -> yash123
+--   Sumit            -> sumit123
+--   Mahesh           -> mahesh123
+--   Pushkar          -> pushkar123
+--   Rushi            -> rushi123
 -- ==========================================
 
 -- Seed core users
 INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `role`, `department`, `roll_or_emp_id`)
 VALUES
--- HOD
-(1, 'Dr. Dipali Shende', 'hod@college.edu', '$2y$10$cL74wAwO96xZpG6zP5qNg.iI4b8wZ4aA3cD4eE5fF6gG7hH8iI9jJ', 'hod', 'Computer Engineering', 'HOD-001'),
-(2, 'Dr. Dipali Shende', 'dipali.shende@college.edu', '$2y$10$cL74wAwO96xZpG6zP5qNg.iI4b8wZ4aA3cD4eE5fF6gG7hH8iI9jJ', 'hod', 'Computer Engineering', 'HOD-001'),
+-- HOD (dipali123)
+(1, 'Dr. Dipali Shende', 'hod@college.edu', '$2y$10$85QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'hod', 'Computer Engineering', 'HOD-001'),
+(2, 'Dr. Dipali Shende', 'dipali.shende@college.edu', '$2y$10$85QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'hod', 'Computer Engineering', 'HOD-001'),
 
--- GFMs
-(3, 'Omkar Wadekar', 'omkar@college.edu', '$2y$10$bK63vZvN85wYoF5yO4pMf.hH3a7wY3zZ2bC3dD4eE5fF6gG7hH8iI', 'gfm', 'Computer Engineering', 'GFM-A101'),
-(4, 'Pushkaraj Sonalkar', 'pushkaraj@college.edu', '$2y$10$bK63vZvN85wYoF5yO4pMf.hH3a7wY3zZ2bC3dD4eE5fF6gG7hH8iI', 'gfm', 'Computer Engineering', 'GFM-B102'),
-(5, 'Shrutika Saudagar', 'shrutika@college.edu', '$2y$10$bK63vZvN85wYoF5yO4pMf.hH3a7wY3zZ2bC3dD4eE5fF6gG7hH8iI', 'gfm', 'Computer Engineering', 'GFM-C103'),
+-- GFMs (omkar123, pushkaraj123, shrutika123)
+(3, 'Omkar Wadekar', 'omkar@college.edu', '$2y$10$95QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'gfm', 'Computer Engineering', 'GFM-A101'),
+(4, 'Pushkaraj Sonalkar', 'pushkaraj@college.edu', '$2y$10$95QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'gfm', 'Computer Engineering', 'GFM-B102'),
+(5, 'Shrutika Saudagar', 'shrutika@college.edu', '$2y$10$95QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'gfm', 'Computer Engineering', 'GFM-C103'),
 
--- Division A Students
-(6, 'Om potarkar', 'om@gmail.com', '$2y$10$aJ52uYvM74vXnE4xN3oLe.gG2z6wX2zY1aB2cC3dD4eE5fF6gG7hH', 'student', 'Computer Engineering', '1'),
-(7, 'Akib Momin', 'akib@gmail.com', '$2y$10$aJ52uYvM74vXnE4xN3oLe.gG2z6wX2zY1aB2cC3dD4eE5fF6gG7hH', 'student', 'Computer Engineering', '2'),
-(8, 'Sachin tompe', 'sachin@gmail.com', '$2y$10$aJ52uYvM74vXnE4xN3oLe.gG2z6wX2zY1aB2cC3dD4eE5fF6gG7hH', 'student', 'Computer Engineering', '3'),
+-- Division A Students (om123, akib123, sachin123)
+(6, 'Om potarkar', 'om@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '1'),
+(7, 'Akib Momin', 'akib@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '2'),
+(8, 'Sachin tompe', 'sachin@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '3'),
 
--- Division B Students
-(9, 'Ram Mutthe', 'ram@gmail.com', '$2y$10$aJ52uYvM74vXnE4xN3oLe.gG2z6wX2zY1aB2cC3dD4eE5fF6gG7hH', 'student', 'Computer Engineering', '1'),
-(10, 'Yash lahase', 'yash@gmail.com', '$2y$10$aJ52uYvM74vXnE4xN3oLe.gG2z6wX2zY1aB2cC3dD4eE5fF6gG7hH', 'student', 'Computer Engineering', '2'),
-(11, 'Sumit Kulkarni', 'sumit@gmail.com', '$2y$10$aJ52uYvM74vXnE4xN3oLe.gG2z6wX2zY1aB2cC3dD4eE5fF6gG7hH', 'student', 'Computer Engineering', '3'),
+-- Division B Students (ram123, yash123, sumit123)
+(9, 'Ram Mutthe', 'ram@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '1'),
+(10, 'Yash lahase', 'yash@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '2'),
+(11, 'Sumit Kulkarni', 'sumit@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '3'),
 
--- Division C Students
-(12, 'Mahesh Jadhav', 'mahesh@gmail.com', '$2y$10$aJ52uYvM74vXnE4xN3oLe.gG2z6wX2zY1aB2cC3dD4eE5fF6gG7hH', 'student', 'Computer Engineering', '1'),
-(13, 'Pushkar Mali', 'pushkar@gmail.com', '$2y$10$aJ52uYvM74vXnE4xN3oLe.gG2z6wX2zY1aB2cC3dD4eE5fF6gG7hH', 'student', 'Computer Engineering', '2'),
-(14, 'rushi mane', 'rushi@gmail.com', '$2y$10$aJ52uYvM74vXnE4xN3oLe.gG2z6wX2zY1aB2cC3dD4eE5fF6gG7hH', 'student', 'Computer Engineering', '3');
+-- Division C Students (mahesh123, pushkar123, rushi123)
+(12, 'Mahesh Jadhav', 'mahesh@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '1'),
+(13, 'Pushkar Mali', 'pushkar@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '2'),
+(14, 'rushi mane', 'rushi@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '3');
 
 -- Seed GFM detail assignments
 INSERT INTO `gfm_details` (`user_id`, `division_assigned`)

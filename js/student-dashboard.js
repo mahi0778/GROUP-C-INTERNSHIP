@@ -83,6 +83,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. INITIALIZATION & DATA RENDERERS
     // ==========================================
     function init() {
+        const storedUser = sessionStorage.getItem('attendance_user') || localStorage.getItem('attendance_user');
+        if (storedUser) {
+            try {
+                const parsed = JSON.parse(storedUser);
+                if (parsed && parsed.full_name) {
+                    state.student.name = parsed.full_name;
+                    if (parsed.roll_no || parsed.roll_or_emp_id) state.student.rollNo = parsed.roll_no || parsed.roll_or_emp_id;
+                    if (parsed.email) state.student.email = parsed.email;
+                    if (parsed.department) state.student.department = parsed.department;
+                    if (parsed.semester) state.student.semester = parsed.semester;
+                    if (parsed.division) state.student.division = parsed.division;
+                    if (parsed.gfm_name) state.student.gfmName = parsed.gfm_name;
+                    if (parsed.phone) state.student.phone = parsed.phone;
+                    if (parsed.guardian_contact) state.student.guardianContact = parsed.guardian_contact;
+                    if (parsed.avatar_url) state.student.avatarUrl = parsed.avatar_url;
+                }
+            } catch(e) {}
+        }
+
         renderStudentProfile();
         renderSummaryCards();
         renderSubjectCards();
