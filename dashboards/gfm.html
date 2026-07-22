@@ -247,20 +247,20 @@
             <div class="dashboard-hero">
               <div class="hero-text">
                 <h1>Welcome back, <span class="user-name" id="heroUserName">Prof. Aniket Verma</span> 👋</h1>
-                <p>Guardian Faculty Member • <strong>Computer Engineering Department (Division A)</strong></p>
+                <p>Guardian Faculty Member • <strong>Computer Engineering Department (<span id="gfmDivisionText">Division A</span>)</strong></p>
                 
                 <div class="hero-academic-meta">
                   <div class="meta-tag">
                     <span class="meta-label">Assigned Batch:</span>
-                    <span class="meta-val">SE Comp-A (2025-2026)</span>
+                    <span class="meta-val" id="gfmAssignedBatch">SE Comp-A (2025-2026)</span>
                   </div>
                   <div class="meta-tag">
                     <span class="meta-label">Total Conducted Lectures:</span>
-                    <span class="meta-val">150 Sessions</span>
+                    <span class="meta-val" id="gfmConductedLectures">150 Sessions</span>
                   </div>
                   <div class="meta-tag">
                     <span class="meta-label">Department Stand:</span>
-                    <span class="meta-val">88.4% Average Attendance</span>
+                    <span class="meta-val" id="gfmAverageAttendance">88.4% Average Attendance</span>
                   </div>
                 </div>
               </div>
@@ -281,8 +281,8 @@
               <div class="metric-card">
                 <div class="metric-info">
                   <span class="metric-title">Assigned Classes</span>
-                  <span class="metric-value">6</span>
-                  <span class="metric-helper">Division A & B Subjects</span>
+                  <span class="metric-value">3</span>
+                  <span class="metric-helper">Division Subjects</span>
                 </div>
                 <div class="metric-icon-box" style="background: rgba(59, 130, 246, 0.1); color: #3B82F6;">
                   <i class="fa-solid fa-chalkboard-user fa-lg"></i>
@@ -293,7 +293,7 @@
               <div class="metric-card">
                 <div class="metric-info">
                   <span class="metric-title">Today's Attendance</span>
-                  <span class="metric-value">88%</span>
+                  <span class="metric-value" id="gfmTodayAttendance">88%</span>
                   <span class="metric-helper text-success"><i class="fa-solid fa-arrow-up"></i> +2.4% vs last week</span>
                 </div>
                 <div class="metric-icon-box" style="background: rgba(16, 185, 129, 0.1); color: #10B981;">
@@ -305,7 +305,7 @@
               <div class="metric-card">
                 <div class="metric-info">
                   <span class="metric-title">Total GFM Students</span>
-                  <span class="metric-value">180</span>
+                  <span class="metric-value" id="gfmTotalStudents">180</span>
                   <span class="metric-helper">Active Batch Students</span>
                 </div>
                 <div class="metric-icon-box" style="background: rgba(139, 92, 246, 0.1); color: #8B5CF6;">
@@ -317,8 +317,8 @@
               <div class="metric-card">
                 <div class="metric-info">
                   <span class="metric-title">Defaulters Flagged</span>
-                  <span class="metric-value danger-text">12</span>
-                  <span class="metric-helper text-danger">4 Critical (&lt;60%)</span>
+                  <span class="metric-value danger-text" id="gfmDefaultersCount">12</span>
+                  <span class="metric-helper text-danger" id="gfmDefaultersHelper">4 Critical (&lt;60%)</span>
                 </div>
                 <div class="metric-icon-box" style="background: rgba(239, 68, 68, 0.1); color: #EF4444;">
                   <i class="fa-solid fa-triangle-exclamation fa-lg"></i>

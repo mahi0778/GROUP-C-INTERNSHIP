@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ==========================================
   // 1. STATE & USER SESSION INITIALIZATION
   // ==========================================
+  let csrfToken = null;
   let currentUser = {
     id: 1,
     full_name: 'Prof. Aniket Verma',
@@ -26,19 +27,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         currentUser = parsed;
       }
     } catch(e) {}
-  } else {
-    // Attempt PHP backend session lookup
+  }
+
+  async function syncSessionContext() {
     try {
-      const res = await fetch('../api/session.php');
+      const res = await fetch('../api/session.php', {
+        headers: { 'Accept': 'application/json' }
+      });
       if (res.ok) {
         const data = await res.json();
         if (data.authenticated && data.user) {
           currentUser = data.user;
+          csrfToken = data.csrf_token || null;
           sessionStorage.setItem('attendance_user', JSON.stringify(currentUser));
         }
       }
     } catch(e) {}
   }
+
+  await syncSessionContext();
 
   // Populate User Information in UI
   function updateUserInfoUI() {
@@ -304,18 +311,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ==========================================
   // 6. MOCK STUDENT ROSTER DATA & RENDERERS
   // ==========================================
-  const studentsData = [
-    { roll: 'STU-101', name: 'Rahul Sharma', div: 'Div A', email: 'rahul.sharma@college.edu', conducted: 150, attended: 138, phone: '+91 98765 43210' },
-    { roll: 'STU-102', name: 'Aaditya Patil', div: 'Div A', email: 'aaditya.p@college.edu', conducted: 150, attended: 142, phone: '+91 98220 11223' },
-    { roll: 'STU-103', name: 'Sneha Deshmukh', div: 'Div A', email: 'sneha.d@college.edu', conducted: 150, attended: 105, phone: '+91 99887 76655' }, // 70% Warning
-    { roll: 'STU-104', name: 'Rohan Kulkarni', div: 'Div A', email: 'rohan.k@college.edu', conducted: 150, attended: 82, phone: '+91 97654 32109' },  // 54.6% Critical
-    { roll: 'STU-105', name: 'Tanvi Joshi', div: 'Div A', email: 'tanvi.j@college.edu', conducted: 150, attended: 135, phone: '+91 98112 23344' },
-    { roll: 'STU-106', name: 'Yash Pawar', div: 'Div B', email: 'yash.pawar@college.edu', conducted: 150, attended: 98, phone: '+91 95544 33221' },   // 65.3% Warning
-    { roll: 'STU-107', name: 'Ananya Roy', div: 'Div A', email: 'ananya.r@college.edu', conducted: 150, attended: 147, phone: '+91 94433 22110' },
-    { roll: 'STU-108', name: 'Vikrant Shinde', div: 'Div B', email: 'vikrant.s@college.edu', conducted: 150, attended: 75, phone: '+91 93322 11009' }, // 50% Critical
-    { roll: 'STU-109', name: 'Pooja Hegde', div: 'Div A', email: 'pooja.h@college.edu', conducted: 150, attended: 130, phone: '+91 92211 00998' },
-    { roll: 'STU-110', name: 'Sameer Khan', div: 'Div B', email: 'sameer.k@college.edu', conducted: 150, attended: 102, phone: '+91 91100 99887' }  // 68% Warning
-  ];
+  let studentsData = [];
 
   // Helper to calculate percentage & status
   function getAttendanceStatus(attended, conducted) {
@@ -469,10 +465,38 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // Submit Attendance
-  document.getElementById('saveAttendanceBtn')?.addEventListener('click', () => {
+  document.getElementById('saveAttendanceBtn')?.addEventListener('click', async () => {
     const subject = document.getElementById('entrySubjectSelect')?.value || 'Web Development';
-    const cls = document.getElementById('entryClassSelect')?.value || 'SE Comp-A';
-    showToast(`Attendance for ${subject} (${cls}) saved successfully!`, 'success');
+    const date = document.getElementById('entryDateInput')?.value || new Date().toISOString().split('T')[0];
+    const time_slot = document.getElementById('entryTimeSelect')?.value || '09:30 AM - 10:30 AM';
+    
+    const records = [];
+    studentsData.forEach(student => {
+      const isPresent = attendanceState[student.roll] !== false;
+      records.push({
+        student_id: student.id,
+        status: isPresent ? 'Present' : 'Absent'
+      });
+    });
+
+    try {
+      const response = await fetch('../api/save_attendance.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ subject, date, time_slot, records })
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          showToast(`Attendance for ${subject} saved successfully!`, 'success');
+          await loadGFMDashboardData();
+        } else {
+          showToast(data.message || 'Failed to save attendance.', 'danger');
+        }
+      }
+    } catch(err) {
+      showToast('Error saving attendance records.', 'danger');
+    }
   });
 
   renderAttendanceEntryRoster();
@@ -557,34 +581,43 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ==========================================
   // 9. NOTICE BOARD ENGINE
   // ==========================================
-  const noticesList = [
-    { id: 1, title: 'Mid-Term Attendance Defaulter List Released', target: 'SE Comp Div A', message: 'All students with attendance below 75% are required to submit leave applications with medical certificates by Friday.', date: 'Jul 18, 2026' },
-    { id: 2, title: 'Parent-Teacher Meeting Scheduled', target: 'Critical Defaulters', message: 'Parent-teacher meeting scheduled for all students falling under critical defaulter category (<60%).', date: 'Jul 15, 2026' }
-  ];
+  let noticesList = [];
 
   function renderNotices() {
     const container = document.getElementById('publishedNoticesList');
     if (!container) return;
-    container.innerHTML = '';
+    container.replaceChildren();
 
     noticesList.forEach(notice => {
       const div = document.createElement('div');
       div.className = 'chart-box';
       div.style.cssText = 'padding: 18px 24px; position: relative; border-left: 4px solid #3B82F6;';
-      div.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-          <div>
-            <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 4px;">${notice.title}</h3>
-            <span style="font-size: 0.78rem; color: var(--primary); font-weight: 700;">Target: ${notice.target} • Posted ${notice.date}</span>
-          </div>
-        </div>
-        <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;">${notice.message}</p>
-      `;
+
+      const top = document.createElement('div');
+      top.style.cssText = 'display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;';
+
+      const content = document.createElement('div');
+
+      const title = document.createElement('h3');
+      title.style.cssText = 'font-size: 1rem; font-weight: 700; margin-bottom: 4px;';
+      title.textContent = notice.title || 'Untitled Notice';
+
+      const meta = document.createElement('span');
+      meta.style.cssText = 'font-size: 0.78rem; color: var(--primary); font-weight: 700;';
+      meta.textContent = `Target: ${notice.target || 'General'} • Posted ${notice.date || 'Recently'}`;
+
+      const message = document.createElement('p');
+      message.style.cssText = 'font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;';
+      message.textContent = notice.message || 'No notice message provided.';
+
+      content.append(title, meta);
+      top.appendChild(content);
+      div.append(top, message);
       container.appendChild(div);
     });
   }
 
-  document.getElementById('newNoticeForm')?.addEventListener('submit', (e) => {
+  document.getElementById('newNoticeForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const title = document.getElementById('noticeTitleInput')?.value;
     const target = document.getElementById('noticeTargetSelect')?.value;
@@ -592,17 +625,39 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (!title || !message) return;
 
-    noticesList.unshift({
-      id: Date.now(),
-      title,
-      target,
-      message,
-      date: 'Just Now'
-    });
+    try {
+      if (!csrfToken) {
+        await syncSessionContext();
+      }
 
-    renderNotices();
-    e.target.reset();
-    showToast('New notice published to student portal!');
+      const response = await fetch('../api/publish_notice.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-CSRF-Token': csrfToken || ''
+        },
+        body: JSON.stringify({ title, target, message })
+      });
+
+      const data = await response.json();
+      if (response.ok && data.success) {
+        noticesList.unshift({
+          id: Date.now(),
+          title,
+          target,
+          message,
+          date: 'Just Now'
+        });
+        renderNotices();
+        e.target.reset();
+        showToast('New notice published successfully!');
+      } else {
+        showToast(data.message || 'Failed to publish notice.', 'danger');
+      }
+    } catch(err) {
+      showToast('Error communicating with server.', 'danger');
+    }
   });
 
   renderNotices();
@@ -726,5 +781,79 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
     }
   });
+
+  async function loadGFMDashboardData() {
+    try {
+      const res = await fetch('../api/get_gfm_dashboard.php');
+      if (res.ok) {
+        const result = await res.json();
+        if (result.success && result.data) {
+          const data = result.data;
+          
+          studentsData = data.students;
+          noticesList = data.notices;
+          
+          const gfmDivText = document.getElementById('gfmDivisionText');
+          if (gfmDivText) gfmDivText.textContent = data.division;
+          
+          const gfmAssignedBatch = document.getElementById('gfmAssignedBatch');
+          if (gfmAssignedBatch) gfmAssignedBatch.textContent = data.division + ' (2025-2026)';
+          
+          const stats = data.metrics;
+          
+          const totalStudentsElem = document.getElementById('gfmTotalStudents');
+          if (totalStudentsElem) totalStudentsElem.textContent = stats.totalStudents;
+          
+          const todayAttendanceElem = document.getElementById('gfmTodayAttendance');
+          if (todayAttendanceElem) todayAttendanceElem.textContent = stats.overallAvg + '%';
+          
+          const defaultersCountElem = document.getElementById('gfmDefaultersCount');
+          if (defaultersCountElem) defaultersCountElem.textContent = stats.defaultersCount;
+          
+          const defaultersHelperElem = document.getElementById('gfmDefaultersHelper');
+          if (defaultersHelperElem) {
+            defaultersHelperElem.textContent = `${stats.criticalCount} Critical (<60%)`;
+          }
+          
+          const conductedLecturesElem = document.getElementById('gfmConductedLectures');
+          if (conductedLecturesElem) {
+            conductedLecturesElem.textContent = `${stats.totalConducted} Sessions`;
+          }
+          
+          const avgAttendanceElem = document.getElementById('gfmAverageAttendance');
+          if (avgAttendanceElem) {
+            avgAttendanceElem.textContent = `${stats.overallAvg}% Average Attendance`;
+          }
+
+          const warningCountText = document.getElementById('warningCountText');
+          if (warningCountText) warningCountText.textContent = `${stats.warningCount} Students`;
+
+          const criticalCountText = document.getElementById('criticalCountText');
+          if (criticalCountText) criticalCountText.textContent = `${stats.criticalCount} Students`;
+
+          studentsData.forEach(s => {
+            if (!(s.roll in attendanceState)) {
+              attendanceState[s.roll] = true;
+            }
+          });
+          
+          renderStudentTable();
+          renderAttendanceEntryRoster();
+          renderDefaulterTable();
+          renderNotices();
+          return;
+        }
+      }
+    } catch(err) {
+      console.error("Error loading GFM dashboard:", err);
+    }
+    
+    showToast("Session expired. Redirecting to login...", "danger");
+    setTimeout(() => {
+      window.location.href = '../login.html';
+    }, 1500);
+  }
+  
+  await loadGFMDashboardData();
 
 });
