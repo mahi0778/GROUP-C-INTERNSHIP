@@ -43,7 +43,7 @@
             <button class="icon-btn" aria-label="Notifications"><i class="fa-solid fa-bell"></i></button>
             <label class="search-box">
               <i class="fa-solid fa-search"></i>
-              <input type="text" placeholder="Search student" />
+              <input type="text" placeholder="Search student" id="defaulterSearchInput" />
             </label>
             <div class="avatar-chip">
               <img src="images/hod-profile.png" alt="Profile" />
@@ -63,11 +63,11 @@
           <section class="filter-bar reveal">
             <label>
               <span>Division</span>
-              <select>
-                <option>All</option>
-                <option>FY A</option>
-                <option>FY B</option>
-                <option>SY A</option>
+              <select id="defaulterDivSelect">
+                <option value="All">All</option>
+                <option value="Div A">Div A</option>
+                <option value="Div B">Div B</option>
+                <option value="Div C">Div C</option>
               </select>
             </label>
             <label>
@@ -108,7 +108,7 @@
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="defaulterTableBody">
                   <tr class="danger-row">
                     <td>2101</td>
                     <td>PRN-112</td>
@@ -155,5 +155,7 @@
         </footer>
       </div>
     </div>
+    <script src="js/dashboard.js"></script>
+    <script src="js/defaulters.js"></script>
   </body>
 </html>

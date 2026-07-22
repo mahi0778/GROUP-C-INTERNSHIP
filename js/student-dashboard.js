@@ -749,7 +749,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }, duration);
     }
 
-    // Launch Dashboard Engine
-    init();
+    // Launch Dashboard Engine with Backend Integration
+    async function loadDashboardData() {
+        const overlay = document.getElementById('loadingOverlay');
+        if (overlay) overlay.classList.remove('hidden');
+        
+        try {
+            const res = await fetch('../api/get_student_dashboard.php');
+            if (res.ok) {
+                const result = await res.json();
+                if (result.success && result.data) {
+                    // Overwrite default state with database results
+                    state.student = result.data.student;
+                    state.stats = result.data.stats;
+                    state.subjects = result.data.subjects;
+                    state.monthlyData = result.data.monthlyData;
+                    state.notifications = result.data.notifications;
+                    state.schedule = result.data.schedule;
+                    state.history = result.data.history;
+                    
+                    filteredHistory = [...state.history];
+                    
+                    init();
+                    if (overlay) overlay.classList.add('hidden');
+                    return;
+                }
+            }
+        } catch (err) {
+            console.error("Error loading dashboard data from backend:", err);
+        }
+        
+        // Redirect to login if unauthorized or error
+        if (overlay) overlay.classList.add('hidden');
+        showToast("Session expired. Redirecting to login...", "danger");
+        setTimeout(() => {
+            window.location.href = '../login.html';
+        }, 1500);
+    }
+    
+    loadDashboardData();
 
 });

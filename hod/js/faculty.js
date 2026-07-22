@@ -1,49 +1,57 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const facultyCards = [
-    { name: 'Prof. D. Shah', department: 'Computer Engineering', subject: 'DBMS', status: 'Active' },
-    { name: 'Prof. N. Joshi', department: 'Computer Engineering', subject: 'Web Technology', status: 'On Leave' },
-    { name: 'Prof. R. Mehta', department: 'Computer Engineering', subject: 'OOP', status: 'Active' }
-  ];
-
-  const tableRows = [
-    { name: 'Prof. D. Shah', department: 'Computer Engineering', className: 'FY', division: 'FY A', subject: 'DBMS', email: 'dipali@college.edu', phone: '+91 98765 43210', status: 'Active' },
-    { name: 'Prof. N. Joshi', department: 'Computer Engineering', className: 'SY', division: 'SY A', subject: 'Web Technology', email: 'nidhi@college.edu', phone: '+91 91234 56789', status: 'On Leave' }
-  ];
-
+document.addEventListener('DOMContentLoaded', async () => {
   const cardsContainer = document.getElementById('facultyCards');
   const tableBody = document.getElementById('facultyTableBody');
 
-  if (cardsContainer) {
-    cardsContainer.innerHTML = facultyCards.map((faculty) => `
-      <article class="panel-card reveal">
-        <div class="panel-head">
-          <h3>${faculty.name}</h3>
-          <span class="badge-status ${faculty.status === 'Active' ? 'good' : 'warning'}">${faculty.status}</span>
-        </div>
-        <p><strong>Department:</strong> ${faculty.department}</p>
-        <p><strong>Subject:</strong> ${faculty.subject}</p>
-        <div class="button-row" style="margin-top: 12px;">
-          <button class="btn btn-secondary">View</button>
-          <button class="btn btn-primary">Edit</button>
-          <button class="btn btn-secondary">Assign</button>
-        </div>
-      </article>
-    `).join('');
-  }
+  try {
+    const res = await fetch('../api/get_hod_faculty.php');
+    if (res.ok) {
+      const result = await res.json();
+      if (result.success && result.data) {
+        const facultyList = result.data;
 
-  if (tableBody) {
-    tableBody.innerHTML = tableRows.map((row) => `
-      <tr>
-        <td>${row.name}</td>
-        <td>${row.department}</td>
-        <td>${row.className}</td>
-        <td>${row.division}</td>
-        <td>${row.subject}</td>
-        <td>${row.email}</td>
-        <td>${row.phone}</td>
-        <td><span class="badge-status ${row.status === 'Active' ? 'good' : 'warning'}">${row.status}</span></td>
-        <td><div class="button-row"><button class="btn btn-secondary">View</button><button class="btn btn-primary">Edit</button></div></td>
-      </tr>
-    `).join('');
+        // Render Cards (Summary panel)
+        if (cardsContainer) {
+          cardsContainer.innerHTML = facultyList.map((faculty) => `
+            <article class="panel-card reveal visible">
+              <div class="panel-head">
+                <h3>${faculty.name}</h3>
+                <span class="badge-status ${faculty.status === 'Active' ? 'good' : 'warning'}">${faculty.status}</span>
+              </div>
+              <p><strong>Department:</strong> ${faculty.department}</p>
+              <p><strong>Subject:</strong> ${faculty.subject}</p>
+              <div class="button-row" style="margin-top: 12px;">
+                <button class="btn btn-secondary" onclick="alert('Viewing profile for ${faculty.name}')">View</button>
+                <button class="btn btn-primary" onclick="alert('Editing profile for ${faculty.name}')">Edit</button>
+                <button class="btn btn-secondary" onclick="alert('Assigning subjects for ${faculty.name}')">Assign</button>
+              </div>
+            </article>
+          `).join('');
+        }
+
+        // Render Table list
+        if (tableBody) {
+          tableBody.innerHTML = facultyList.map((row) => `
+            <tr>
+              <td>${row.name}</td>
+              <td>${row.department}</td>
+              <td>SE</td> <!-- Seed data is for SE Comp -->
+              <td>${row.division}</td>
+              <td>${row.subject}</td>
+              <td>${row.email || 'N/A'}</td>
+              <td>${row.phone || 'N/A'}</td>
+              <td><span class="badge-status ${row.status === 'Active' ? 'good' : 'warning'}">${row.status}</span></td>
+              <td>
+                <div class="button-row">
+                  <button class="btn btn-secondary" onclick="alert('Viewing logs for ${row.name}')">View</button>
+                  <button class="btn btn-primary" onclick="alert('Editing allocation for ${row.name}')">Edit</button>
+                </div>
+              </td>
+            </tr>
+          `).join('');
+        }
+      }
+    }
+  } catch (err) {
+    console.error("Error loading faculty registry:", err);
   }
 });

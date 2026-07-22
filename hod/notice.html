@@ -52,34 +52,69 @@
         </header>
 
         <main class="content-area">
-          <section class="page-header reveal">
+          <section class="page-header reveal notice-page-header">
             <div>
               <p class="eyebrow">Department communication</p>
               <h1>Notice Board</h1>
               <p class="lead">Publish faculty updates, policy notices, and academic reminders.</p>
             </div>
-            <button class="btn btn-primary floating-btn"><i class="fa-solid fa-plus"></i> Add Notice</button>
+            <a class="btn btn-primary floating-btn" href="#noticeComposer"><i class="fa-solid fa-plus"></i> Add Notice</a>
           </section>
 
           <section class="notice-grid">
-            <article class="notice-card reveal">
+            <article class="notice-card reveal notice-compose-card notice-feature-card" id="noticeComposer">
               <div class="notice-top">
-                <span class="priority high">High</span>
-                <span>July 21, 2026</span>
+                <span class="priority high">Create</span>
+                <span>HOD Controls</span>
               </div>
-              <h3>Attendance review meeting</h3>
-              <p>All faculty members must review low attendance cases before the end of the week.</p>
-              <a href="#">Read more</a>
-            </article>
-            <article class="notice-card reveal">
-              <div class="notice-top">
-                <span class="priority medium">Medium</span>
-                <span>July 18, 2026</span>
+              <h3>Publish a new notice</h3>
+              <p>Notices published to <strong>All Batches</strong> will also appear on the public landing page notice board.</p>
+
+              <div class="notice-highlight-row">
+                <span class="notice-highlight-pill"><i class="fa-solid fa-bolt"></i> Live sync</span>
+                <span class="notice-highlight-pill"><i class="fa-solid fa-shield-heart"></i> Secure publish</span>
               </div>
-              <h3>Semester report submission</h3>
-              <p>Updated attendance sheets should be submitted by the department office by Friday.</p>
-              <a href="#">Read more</a>
+
+              <form id="hodNoticeForm" class="notice-form" novalidate>
+                <label class="form-field">
+                  <span>Notice title</span>
+                  <input type="text" id="hodNoticeTitle" maxlength="200" placeholder="Enter notice title" required />
+                </label>
+
+                <label class="form-field">
+                  <span>Target audience</span>
+                  <select id="hodNoticeTarget">
+                    <option value="All Batches">All Batches</option>
+                    <option value="ALL">All</option>
+                    <option value="Faculty">Faculty</option>
+                    <option value="Students">Students</option>
+                  </select>
+                </label>
+
+                <label class="form-field">
+                  <span>Message</span>
+                  <textarea id="hodNoticeMessage" rows="5" maxlength="3000" placeholder="Write the notice message here..." required></textarea>
+                </label>
+
+                <div class="notice-form-actions">
+                  <button type="submit" class="btn btn-primary">Publish Notice</button>
+                  <button type="reset" class="btn btn-secondary">Clear</button>
+                </div>
+              </form>
             </article>
+
+            <section class="notice-feed">
+              <article class="notice-card reveal notice-live-card">
+                <div class="notice-top">
+                  <span class="priority medium">Live</span>
+                  <span>Latest updates</span>
+                </div>
+                <h3>Published notices</h3>
+                <p>Newly added HOD notices will appear here immediately after publishing.</p>
+              </article>
+
+              <div id="hodNoticeList" class="notice-list-panel" aria-live="polite"></div>
+            </section>
           </section>
         </main>
 
@@ -101,5 +136,6 @@
         </footer>
       </div>
     </div>
+    <script src="js/dashboard.js"></script>
   </body>
 </html>
