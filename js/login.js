@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const eyeIcon = document.getElementById('eyeIcon');
 
   // Mock User Database for Offline / Static Demo Mode
+  // Mock User Database for Offline / Static Demo Mode
   const demoUsers = [
     {
       id: 1,
@@ -51,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
       id: 9,
       full_name: 'Ram Mutthe',
       email: 'ram@gmail.com',
-      password: 'ram123',
+      password: '125UAM1004',
       role: 'student',
       department: 'Computer Engineering',
       roll_or_emp_id: '1',
@@ -69,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
       id: 6,
       full_name: 'Om Potarkar',
       email: 'om@gmail.com',
-      password: 'om123',
+      password: '125UAM1001',
       role: 'student',
       department: 'Computer Engineering',
       roll_or_emp_id: '1',
@@ -87,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
       id: 7,
       full_name: 'Akib Momin',
       email: 'akib@gmail.com',
-      password: 'akib123',
+      password: '125UAM1002',
       role: 'student',
       department: 'Computer Engineering',
       roll_or_emp_id: '2',
@@ -105,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
       id: 8,
       full_name: 'Sachin Tompe',
       email: 'sachin@gmail.com',
-      password: 'sachin123',
+      password: '125UAM1003',
       role: 'student',
       department: 'Computer Engineering',
       roll_or_emp_id: '3',
@@ -123,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
       id: 10,
       full_name: 'Yash Lahase',
       email: 'yash@gmail.com',
-      password: 'yash123',
+      password: '125UAM1005',
       role: 'student',
       department: 'Computer Engineering',
       roll_or_emp_id: '2',
@@ -141,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
       id: 11,
       full_name: 'Sumit Kulkarni',
       email: 'sumit@gmail.com',
-      password: 'sumit123',
+      password: '125UAM1006',
       role: 'student',
       department: 'Computer Engineering',
       roll_or_emp_id: '3',
@@ -159,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
       id: 12,
       full_name: 'Mahesh Jadhav',
       email: 'mahesh@gmail.com',
-      password: 'mahesh123',
+      password: '125UAM1007',
       role: 'student',
       department: 'Computer Engineering',
       roll_or_emp_id: '1',
@@ -177,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
       id: 13,
       full_name: 'Pushkar Mali',
       email: 'pushkar@gmail.com',
-      password: 'pushkar123',
+      password: '125UAM1008',
       role: 'student',
       department: 'Computer Engineering',
       roll_or_emp_id: '2',
@@ -195,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
       id: 14,
       full_name: 'Rushi Mane',
       email: 'rushi@gmail.com',
-      password: 'rushi123',
+      password: '125UAM1009',
       role: 'student',
       department: 'Computer Engineering',
       roll_or_emp_id: '3',
@@ -272,24 +273,32 @@ document.addEventListener('DOMContentLoaded', () => {
       const expectedPassword = expectedFirstName + '123';
       const fallbackRolePass = matchedUser.role + '123';
 
-      if (
-        password.toLowerCase() !== expectedPassword &&
-        password.toLowerCase() !== fallbackRolePass &&
-        password !== matchedUser.password
-      ) {
-        showAlert(`Incorrect password for ${matchedUser.full_name}. Please use password "${expectedPassword}".`);
-        return false;
+      if (matchedUser.role === 'student') {
+        const studentPrn = matchedUser.prn || '';
+        if (
+          password.toUpperCase() !== studentPrn.toUpperCase() &&
+          password.toLowerCase() !== expectedPassword &&
+          password !== matchedUser.password &&
+          password !== 'student123'
+        ) {
+          showAlert(`Incorrect password for ${matchedUser.full_name}. Please use your PRN number (${studentPrn}).`);
+          return false;
+        }
+      } else {
+        if (
+          password.toLowerCase() !== expectedPassword &&
+          password.toLowerCase() !== fallbackRolePass &&
+          password !== matchedUser.password
+        ) {
+          showAlert(`Incorrect password for ${matchedUser.full_name}. Please use password "${expectedPassword}".`);
+          return false;
+        }
       }
     } else {
       // Dynamic user creation if any other email entered
       const namePart = email.split('@')[0].toLowerCase();
       const formattedName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
       const expectedPass = namePart + '123';
-
-      if (password.toLowerCase() !== expectedPass && password.toLowerCase() !== selectedRole + '123') {
-        showAlert(`Invalid credentials. Please use password "${expectedPass}".`);
-        return false;
-      }
 
       if (selectedRole === 'student') {
         matchedUser = {
@@ -347,6 +356,145 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 500);
 
     return true;
+  }
+
+  // ==========================================
+  // FORGOT PASSWORD MODAL & OTP WORKFLOW
+  // ==========================================
+  const forgotLink = document.getElementById('forgotPasswordLink');
+  const forgotModal = document.getElementById('forgotModal');
+  const closeForgotModalBtn = document.getElementById('closeForgotModal');
+  const requestOtpForm = document.getElementById('requestOtpForm');
+  const verifyOtpForm = document.getElementById('verifyOtpForm');
+  const forgotEmailInput = document.getElementById('forgotEmailInput');
+  const otpSentSubtitle = document.getElementById('otpSentSubtitle');
+  const finishResetBtn = document.getElementById('finishResetBtn');
+
+  const forgotStep1 = document.getElementById('forgotStep1');
+  const forgotStep2 = document.getElementById('forgotStep2');
+  const forgotStep3 = document.getElementById('forgotStep3');
+  const forgotAlert = document.getElementById('forgotAlert');
+  const otpAlert = document.getElementById('otpAlert');
+
+  let currentResetEmail = '';
+
+  function showModalAlert(box, msg, type = 'error') {
+    if (!box) return;
+    box.textContent = msg;
+    box.className = `alert-box alert-${type}`;
+    box.style.display = 'block';
+  }
+
+  function hideModalAlerts() {
+    if (forgotAlert) forgotAlert.style.display = 'none';
+    if (otpAlert) otpAlert.style.display = 'none';
+  }
+
+  if (forgotLink && forgotModal) {
+    forgotLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      const mainEmail = emailInput ? emailInput.value.trim() : '';
+      if (forgotEmailInput) forgotEmailInput.value = mainEmail;
+      
+      forgotStep1.style.display = 'block';
+      forgotStep2.style.display = 'none';
+      forgotStep3.style.display = 'none';
+      hideModalAlerts();
+      
+      forgotModal.style.display = 'grid';
+    });
+  }
+
+  if (closeForgotModalBtn && forgotModal) {
+    closeForgotModalBtn.addEventListener('click', () => {
+      forgotModal.style.display = 'none';
+    });
+  }
+
+  // Request OTP Form Submission
+  if (requestOtpForm) {
+    requestOtpForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideModalAlerts();
+
+      currentResetEmail = forgotEmailInput ? forgotEmailInput.value.trim() : '';
+      if (!currentResetEmail) {
+        showModalAlert(forgotAlert, 'Please enter your registered email address.');
+        return;
+      }
+
+      try {
+        const res = await fetch('api/forgot_password.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'request_otp', email: currentResetEmail })
+        });
+        if (res.ok) {
+          const contentType = res.headers.get('content-type') || '';
+          if (contentType.includes('application/json')) {
+            const data = await res.json();
+            if (!data.success) {
+              showModalAlert(forgotAlert, data.message || 'Account not found.');
+              return;
+            }
+          }
+        }
+      } catch(err) {}
+
+      // Trigger pop-up alert as requested by user
+      alert(`OTP has been sent to your email (${currentResetEmail}).`);
+
+      if (otpSentSubtitle) {
+        otpSentSubtitle.textContent = `An OTP has been sent to ${currentResetEmail}.`;
+      }
+      
+      forgotStep1.style.display = 'none';
+      forgotStep2.style.display = 'block';
+    });
+  }
+
+  // Verify OTP & Reset Password Form Submission
+  if (verifyOtpForm) {
+    verifyOtpForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideModalAlerts();
+
+      const otp = document.getElementById('otpCodeInput')?.value.trim();
+      const newPass = document.getElementById('newPasswordInput')?.value.trim();
+
+      if (!otp || !newPass) {
+        showModalAlert(otpAlert, 'Please enter both the OTP code and your new password.');
+        return;
+      }
+
+      if (otp.length < 4) {
+        showModalAlert(otpAlert, 'Please enter a valid 6-digit OTP.');
+        return;
+      }
+
+      try {
+        await fetch('api/forgot_password.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'reset_password', email: currentResetEmail, otp, new_password: newPass })
+        });
+      } catch(err) {}
+
+      // Update demo database in local state
+      const foundUser = demoUsers.find(u => u.email.toLowerCase() === currentResetEmail.toLowerCase());
+      if (foundUser) {
+        foundUser.password = newPass;
+      }
+
+      forgotStep2.style.display = 'none';
+      forgotStep3.style.display = 'block';
+    });
+  }
+
+  if (finishResetBtn && forgotModal) {
+    finishResetBtn.addEventListener('click', () => {
+      forgotModal.style.display = 'none';
+    });
   }
 
   // Form Submit Handler

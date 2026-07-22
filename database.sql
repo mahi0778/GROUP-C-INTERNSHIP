@@ -94,21 +94,14 @@ CREATE TABLE `schedules` (
 
 -- ==========================================
 -- SEED DATA
--- Passwords follow the rule: <firstname>123 (lowercase first name + 123)
+-- Student Passwords follow their PRN number (e.g. 125UAM1004)
+-- Faculty Passwords follow: <firstname>123
 -- Examples:
---   Ram Mutthe       -> ram123
---   Omkar Wadekar    -> omkar123
---   Dr. Dipali       -> dipali123
---   Om potarkar      -> om123
---   Akib Momin       -> akib123
---   Pushkaraj        -> pushkaraj123
---   Shrutika         -> shrutika123
---   Sachin           -> sachin123
---   Yash             -> yash123
---   Sumit            -> sumit123
---   Mahesh           -> mahesh123
---   Pushkar          -> pushkar123
---   Rushi            -> rushi123
+--   Ram Mutthe (Student) -> 125UAM1004
+--   Om potarkar (Student) -> 125UAM1001
+--   Akib Momin (Student) -> 125UAM1002
+--   Omkar Wadekar (GFM)  -> omkar123
+--   Dr. Dipali (HOD)     -> dipali123
 -- ==========================================
 
 -- Seed core users
@@ -123,17 +116,17 @@ VALUES
 (4, 'Pushkaraj Sonalkar', 'pushkaraj@college.edu', '$2y$10$95QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'gfm', 'Computer Engineering', 'GFM-B102'),
 (5, 'Shrutika Saudagar', 'shrutika@college.edu', '$2y$10$95QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'gfm', 'Computer Engineering', 'GFM-C103'),
 
--- Division A Students (om123, akib123, sachin123)
+-- Division A Students (PRN: 125UAM1001, 125UAM1002, 125UAM1003)
 (6, 'Om potarkar', 'om@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '1'),
 (7, 'Akib Momin', 'akib@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '2'),
 (8, 'Sachin tompe', 'sachin@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '3'),
 
--- Division B Students (ram123, yash123, sumit123)
+-- Division B Students (PRN: 125UAM1004, 125UAM1005, 125UAM1006)
 (9, 'Ram Mutthe', 'ram@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '1'),
 (10, 'Yash lahase', 'yash@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '2'),
 (11, 'Sumit Kulkarni', 'sumit@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '3'),
 
--- Division C Students (mahesh123, pushkar123, rushi123)
+-- Division C Students (PRN: 125UAM1007, 125UAM1008, 125UAM1009)
 (12, 'Mahesh Jadhav', 'mahesh@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '1'),
 (13, 'Pushkar Mali', 'pushkar@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '2'),
 (14, 'rushi mane', 'rushi@gmail.com', '$2y$10$75QGZlFqU2sUqQ5A9GzZVe1n10/Q5.n2h8h8y9.y0.y0.y0.y0.y0', 'student', 'Computer Engineering', '3');

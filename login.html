@@ -56,7 +56,7 @@
                 <input type="checkbox" id="rememberMe" />
                 <span>Remember Me</span>
               </label>
-              <a href="#" onclick="alert('Forgot password? Please contact your Administrator or HOD.'); return false;">Forgot Password?</a>
+              <a href="#" id="forgotPasswordLink">Forgot Password?</a>
             </div>
 
             <button type="submit" class="btn btn-primary" id="submitBtn">
@@ -66,6 +66,70 @@
 
             <a class="back-link" href="index.html"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
           </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forgot Password Overlay Modal -->
+    <div class="modal-overlay" id="forgotModal" style="display: none;">
+      <div class="modal-card">
+        <button type="button" class="modal-close" id="closeForgotModal" aria-label="Close Modal">&times;</button>
+        
+        <!-- Step 1: Request OTP -->
+        <div id="forgotStep1">
+          <div class="brand-block">
+            <p class="eyebrow">Password Reset</p>
+            <h2>Forgot Password?</h2>
+            <p>Enter your registered college email address to receive an OTP.</p>
+          </div>
+          <div class="alert-box" id="forgotAlert" style="display: none;"></div>
+          <form class="login-form" id="requestOtpForm" novalidate>
+            <label>
+              Registered Email Address
+              <input type="email" id="forgotEmailInput" placeholder="name@college.edu" required />
+            </label>
+            <button type="submit" class="btn btn-primary">
+              <span>Send OTP to Email</span>
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+
+        <!-- Step 2: Enter OTP & Reset -->
+        <div id="forgotStep2" style="display: none;">
+          <div class="brand-block">
+            <p class="eyebrow">OTP Sent</p>
+            <h2>Enter 6-Digit OTP</h2>
+            <p id="otpSentSubtitle">An OTP has been sent to your email.</p>
+          </div>
+          <div class="alert-box" id="otpAlert" style="display: none;"></div>
+          <form class="login-form" id="verifyOtpForm" novalidate>
+            <label>
+              6-Digit OTP Code
+              <input type="text" id="otpCodeInput" placeholder="Enter OTP (e.g. 123456)" maxlength="6" required />
+            </label>
+            <label>
+              New Password
+              <input type="password" id="newPasswordInput" placeholder="Enter new password" required />
+            </label>
+            <button type="submit" class="btn btn-primary">
+              <span>Verify OTP & Reset</span>
+              <i class="fa-solid fa-key"></i>
+            </button>
+          </form>
+        </div>
+
+        <!-- Step 3: Confirmation -->
+        <div id="forgotStep3" style="display: none; text-align: center; padding: 12px 0;">
+          <div class="success-icon-badge">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <h2 style="margin: 12px 0 8px;">Password Reset Successful!</h2>
+          <p style="color: var(--muted); margin-bottom: 24px;">Your password has been updated. You can now log in using your new password.</p>
+          <button type="button" class="btn btn-primary" id="finishResetBtn" style="width: 100%;">
+            <span>Back to Login</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
         </div>
       </div>
     </div>

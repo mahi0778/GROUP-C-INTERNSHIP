@@ -105,8 +105,24 @@ try {
 
     echo "Tables created.\n";
 
-    // Helper to generate password hash as <firstname>123
-    function makeUserPassword($fullName, $email) {
+    // Student PRN mapping for passwords
+    $prnMap = [
+        6 => '125UAM1001',
+        7 => '125UAM1002',
+        8 => '125UAM1003',
+        9 => '125UAM1004',
+        10 => '125UAM1005',
+        11 => '125UAM1006',
+        12 => '125UAM1007',
+        13 => '125UAM1008',
+        14 => '125UAM1009'
+    ];
+
+    // Helper to generate password hash
+    function makeUserPassword($role, $fullName, $email, $userId, $prnMap) {
+        if ($role === 'student' && isset($prnMap[$userId])) {
+            return password_hash(strtoupper($prnMap[$userId]), PASSWORD_BCRYPT);
+        }
         $cleanName = preg_replace('/^(Dr\.|Prof\.|Mr\.|Mrs\.|Ms\.)\s*/i', '', trim($fullName));
         $firstName = strtolower(trim(explode(' ', $cleanName)[0]));
         if (empty($firstName)) {
@@ -115,7 +131,7 @@ try {
         return password_hash($firstName . '123', PASSWORD_BCRYPT);
     }
 
-    echo "Passwords hashed as <firstname>123.\n";
+    echo "Passwords hashed (PRN for Students, <firstname>123 for Faculty).\n";
 
     // Seed Users
     $usersStmt = $pdo->prepare("INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `role`, `department`, `roll_or_emp_id`) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -137,7 +153,7 @@ try {
     ];
 
     foreach ($usersData as $u) {
-        $hashedPass = makeUserPassword($u[1], $u[2]);
+        $hashedPass = makeUserPassword($u[3], $u[1], $u[2], $u[0], $prnMap);
         $usersStmt->execute([$u[0], $u[1], $u[2], $hashedPass, $u[3], $u[4], $u[5]]);
     }
     echo "Users seeded.\n";

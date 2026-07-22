@@ -44,6 +44,17 @@ try {
 
         $passValid = password_verify($password, $dbUser['password']);
 
+        if (!$passValid && $dbUser['role'] === 'student') {
+            $prnStmt = $pdo->prepare("SELECT prn FROM student_details WHERE user_id = :user_id");
+            $prnStmt->execute(['user_id' => $dbUser['id']]);
+            $sd = $prnStmt->fetch();
+            if ($sd && !empty($sd['prn'])) {
+                if (strtoupper(trim($password)) === strtoupper(trim($sd['prn']))) {
+                    $passValid = true;
+                }
+            }
+        }
+
         if (!$passValid) {
             if (
                 strtolower($password) === $firstName . '123' ||
